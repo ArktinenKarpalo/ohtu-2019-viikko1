@@ -21,6 +21,64 @@ public class VarastoTest {
     }
 
     @Test
+    public void merkkijonoesitys() {
+        assertEquals("saldo = 0.0, vielä tilaa 10.0", varasto.toString());
+    }
+
+    @Test
+    public void otaLiikaa() {
+        varasto.lisaaVarastoon(5.0);
+        assertEquals(5.0, varasto.otaVarastosta(10.0), vertailuTarkkuus);
+        assertEquals(0.0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void otaNeg() {
+        varasto.lisaaVarastoon(5);
+        varasto.otaVarastosta(-1);
+        assertEquals(0, varasto.otaVarastosta(-1), vertailuTarkkuus);
+
+        assertEquals(5.0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void lisaysHukka() {
+        varasto.lisaaVarastoon(500);
+        assertEquals(10.0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void lisaysNeg() {
+        varasto.lisaaVarastoon(-10);
+        assertEquals(0.0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void konstruktoriVarastoAlkusaldoNeg() {
+        assertEquals(0.0, new Varasto(5, -5).getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void konstruktoriVarastoAlkusaldoOk() {
+        assertEquals(3.0, new Varasto(5, 3).getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void konstruktoriVarastoAlkusaldoHukka() {
+        assertEquals(5.0, new Varasto(5, 20).getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void konstruktoriKayttokelvotonVarastoAlkusaldoHukka() {
+        assertEquals(0.0, new Varasto(-5, 20).getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void konstruktoriKayttokelvotonVarasto() {
+        assertEquals(0.0, new Varasto(-10).getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
     public void konstruktoriLuoTyhjanVaraston() {
         assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
     }
